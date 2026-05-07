@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input - Pertanyaan</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      display: grid;
+      place-items: center;
+      z-index: 20;
+    }
+    .modal-card {
+      width: min(420px, calc(100% - 32px));
+      background: rgba(17, 10, 25, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      color: var(--text);
+    }
+    .modal-card h2 {
+      margin: 0 0 16px;
+      font-size: 1.4rem;
+    }
+    .modal-card p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .modal-card button {
+      width: calc(50% - 10px);
+      margin: 0 5px;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: #1f2937;
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .modal-card button.yes {
+      background: #dc2626;
+    }
+    .modal-card button.no {
+      background: #16a34a;
+    }
+    .result-box {
+      margin-top: 24px;
+      border-radius: 24px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      min-height: 220px;
+    }
+    .warning {
+      color: #fde68a;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .video-wrapper {
+      position: relative;
+      overflow: hidden;
+      padding-top: 56.25%;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #000;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="candy-fall" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div>
+        <span class="logo">JS</span>
+        <div>
+          <h1>Input - Pertanyaan</h1>
+          <p>Berinteraksi dengan pengguna dan tampilkan hasil sesuai pilihan.</p>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-button" aria-label="Toggle tema">🌙 / ☀️</button>
+    </header>
+
+    <main>
+      <div class="card-grid">
+        <article class="card">
+          <div class="icon">❓</div>
+          <h2>Pertanyaan Otomatis</h2>
+          <p>Setiap kali halaman dibuka, pengguna ditanya langsung.</p>
+        </article>
+        <article class="card">
+          <div class="icon">⚠️</div>
+          <h2>Respon Iya</h2>
+          <p>Jika memilih "iya", tampil peringatan khusus tentang Prabowo dan MBG.</p>
+        </article>
+        <article class="card">
+          <div class="icon">�</div>
+          <h2>Respon Bukan</h2>
+          <p>Jika memilih "bukan", akan diputar pidato Prabowo yang berisi "hei antek antek asing".</p>
+        </article>
+      </div>
+
+      <div class="card result-box" id="resultBox">
+        <h2>Hasil Pilihan</h2>
+        <p id="resultText">Jawaban akan muncul setelah Anda memilih pertanyaan.</p>
+      </div>
+
+      <div style="margin-top: 32px; text-align: center;">
+        <button onclick="window.location.href='Index.html'" class="theme-button">⬅ Kembali ke Menu</button>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="questionModal">
+    <div class="modal-card">
+      <h2>Apakah Anda adalah antek antek asing?</h2>
+      <p>Pilih jawaban yang sesuai. Jika memilih "iya", akan muncul peringatan. Jika memilih "bukan", video kucing terbang akan disetel.</p>
+      <button class="yes" onclick="handleAnswer(true)">Iya</button>
+      <button class="no" onclick="handleAnswer(false)">Bukan</button>
+    </div>
+  </div>
+
+  <script>
+    function handleAnswer(isYes) {
+      const modal = document.getElementById('questionModal');
+      const resultText = document.getElementById('resultText');
+      const resultBox = document.getElementById('resultBox');
+      modal.style.display = 'none';
+
+      if (isYes) {
+        resultText.innerHTML = '<div class="warning">Peringatan: Prabowo akan datang dan memberi Anda MBG.</div>Selamat datang di sistem peringatan. Jangan lupa tetap tenang dan ikuti instruksi.';
+      } else {
+        resultText.innerHTML = 'Anda memilih bukan. Sekarang memutar pidato Prabowo yang berisi "hei antek antek asing".';
+        const video = document.createElement('div');
+        video.className = 'video-wrapper';
+        video.innerHTML = '<iframe src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1" title="Pidato Prabowo" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe><p style="margin-top:12px; color:#d1d5db;">Jika video tidak muncul, buka <a href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank" style="color:#93c5fd; text-decoration:underline;">link ini</a>.</p>';
+        resultBox.appendChild(video);
+      }
+    }
+
+    window.addEventListener('load', function() {
+      document.getElementById('questionModal').style.display = 'grid';
+    });
+  </script>
+</body>
+</html>

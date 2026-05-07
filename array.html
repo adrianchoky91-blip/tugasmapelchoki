@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Array - Toko Mini</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="candy-fall" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div>
+        <span class="logo">JS</span>
+        <div>
+          <h1>Array Toko Mini</h1>
+          <p>Belajar buat, update, dan hapus data array menggunakan model toko.</p>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-button" aria-label="Toggle tema">🌙 / ☀️</button>
+    </header>
+
+    <main>
+      <section class="card-grid">
+        <article class="card">
+          <div class="icon">📦</div>
+          <h2>Buat Array Produk</h2>
+          <p>Gunakan array objek untuk menyimpan data barang di toko.</p>
+          <pre>const products = [
+  { id: 1, name: "Beras", price: 12000, stock: 10 },
+  { id: 2, name: "Gula", price: 15000, stock: 8 },
+  { id: 3, name: "Minyak", price: 18000, stock: 5 }
+];</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">✏️</div>
+          <h2>Update Sebagian</h2>
+          <p>Ubah harga atau stok satu produk tanpa membuat array baru.</p>
+          <pre>// Ubah harga produk ID 2
+const product = products.find(item => item.id === 2);
+if (product) {
+  product.price = 14000;
+}</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">🗑️</div>
+          <h2>Hapus Satu Produk</h2>
+          <p>Gunakan <code>filter</code> untuk menghapus item dari array.</p>
+          <pre>const newProducts = products.filter(item => item.id !== 3);</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">🧹</div>
+          <h2>Hapus Semua Produk</h2>
+          <p>Reset array menjadi kosong saat toko tutup atau stok habis.</p>
+          <pre>products.length = 0;
+// atau
+// products = [];</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">🔁</div>
+          <h2>Contoh Interaktif</h2>
+          <p>Coba tambahkan, update, atau hapus produk langsung di halaman ini.</p>
+        </article>
+      </section>
+
+      <div style="margin-top: 30px; display:grid; gap:16px;">
+        <div class="card" style="padding:24px;">
+          <h2>Daftar Produk Toko</h2>
+          <div id="productList" style="min-height: 120px; color: var(--text);"></div>
+          <div style="display:grid; gap:12px; margin-top:16px;">
+            <button class="theme-button" onclick="addProduct()">Tambah Produk Baru</button>
+            <button class="theme-button" onclick="updateProduct()">Update Harga Gula</button>
+            <button class="theme-button" onclick="removeProduct()">Hapus Minyak</button>
+            <button class="theme-button" onclick="clearProducts()">Hapus Semua Produk</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:24px;">
+          <h2>Log Operasi</h2>
+          <div id="logArea" style="min-height: 120px; color: var(--text); white-space: pre-wrap;
+              word-break: break-word; background: rgba(255,255,255,0.08); border-radius:20px; padding:14px;
+              border:1px solid rgba(255,255,255,0.12);"></div>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; text-align: center;">
+        <button onclick="window.location.href='Index.html'" class="theme-button">⬅ Kembali ke Menu</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const products = [
+      { id: 1, name: "Beras", price: 12000, stock: 10 },
+      { id: 2, name: "Gula", price: 15000, stock: 8 },
+      { id: 3, name: "Minyak", price: 18000, stock: 5 }
+    ];
+
+    function renderProducts() {
+      const list = document.getElementById("productList");
+      if (products.length === 0) {
+        list.innerHTML = "<p>Tidak ada produk. Tambahkan produk baru atau muat ulang halaman.</p>";
+        return;
+      }
+
+      list.innerHTML = products.map(item => `
+        <div style="margin-bottom:10px;">
+          <strong>${item.name}</strong><br>
+          Harga: Rp ${item.price.toLocaleString()}<br>
+          Stok : ${item.stock}
+        </div>
+      `).join("");
+    }
+
+    function log(message) {
+      const logArea = document.getElementById("logArea");
+      logArea.textContent = `${new Date().toLocaleTimeString()} - ${message}\n${logArea.textContent}`;
+    }
+
+    function addProduct() {
+      const nextId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+      products.push({ id: nextId, name: "Roti", price: 7000, stock: 12 });
+      renderProducts();
+      log(`Tambah produk: Roti (id ${nextId})`);
+    }
+
+    function updateProduct() {
+      const product = products.find(item => item.id === 2);
+      if (!product) {
+        log("Produk Gula tidak ditemukan.");
+        return;
+      }
+      product.price = 14000;
+      product.stock = Math.max(product.stock - 2, 0);
+      renderProducts();
+      log("Update produk: Gula, harga jadi 14.000 dan stok dikurangi 2.");
+    }
+
+    function removeProduct() {
+      const index = products.findIndex(item => item.id === 3);
+      if (index === -1) {
+        log("Produk Minyak sudah tidak ada.");
+        return;
+      }
+      products.splice(index, 1);
+      renderProducts();
+      log("Hapus produk: Minyak");
+    }
+
+    function clearProducts() {
+      products.length = 0;
+      renderProducts();
+      log("Hapus semua produk (reset array). ");
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

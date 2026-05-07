@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operator - Kalkulator Perbandingan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="candy-fall" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div>
+        <span class="logo">JS</span>
+        <div>
+          <h1>Kalkulator Operator</h1>
+          <p>Perbandingan dan operator logika pada JavaScript.</p>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-button" aria-label="Toggle tema">🌙 / ☀️</button>
+    </header>
+
+    <main>
+      <section class="card-grid">
+        <article class="card">
+          <div class="icon">=</div>
+          <h2>Operator Perbandingan</h2>
+          <p>Bandingkan dua nilai menggunakan <code>==</code>, <code>===</code>, <code>!=</code>, dan <code>!==</code>.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">&gt;</div>
+          <h2>Lebih Besar / Kecil</h2>
+          <p>Gunakan <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, dan <code>&lt;=</code> untuk membandingkan angka.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">&&</div>
+          <h2>Operator Logika</h2>
+          <p>Kombinasikan beberapa perbandingan dengan <code>&&</code> dan <code>||</code>.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">!</div>
+          <h2>Negasi</h2>
+          <p>Gunakan <code>!</code> untuk membalik nilai boolean.</p>
+        </article>
+      </section>
+
+      <div style="margin-top: 32px;">
+        <div class="card" style="padding: 24px;">
+          <h2>Hitung Perbandingan</h2>
+          <p>Masukkan dua nilai, pilih operator, lalu lihat hasil dan penjelasannya.</p>
+          <label for="valueA">Nilai A</label>
+          <input id="valueA" placeholder="Contoh: 10 atau teks" />
+          <label for="valueB">Nilai B</label>
+          <input id="valueB" placeholder="Contoh: 20 atau teks" />
+          <label for="operator">Operator</label>
+          <select id="operator">
+            <option value="==">== (sama saja)</option>
+            <option value="===">=== (sama tipe & nilai)</option>
+            <option value="!=">!= (beda saja)</option>
+            <option value="!==">!== (beda tipe atau nilai)</option>
+            <option value=">">&gt; (lebih besar)</option>
+            <option value=">=">&ge; (lebih besar atau sama)</option>
+            <option value="<">&lt; (lebih kecil)</option>
+            <option value="<=">&le; (lebih kecil atau sama)</option>
+            <option value="&&">&& (dan logika)</option>
+            <option value="||">|| (atau logika)</option>
+          </select>
+          <button class="theme-button" onclick="hitungOperator()">Hitung</button>
+          <div id="result" style="margin-top: 18px; color: var(--text); line-height: 1.6;
+              background: rgba(255,255,255,0.08); border-radius: 18px; padding: 16px;
+              border: 1px solid rgba(255,255,255,0.12);"></div>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; text-align: center;">
+        <button onclick="window.location.href='Index.html'" class="theme-button">⬅ Kembali ke Menu</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function parseValue(value) {
+      if (value === "true") return true;
+      if (value === "false") return false;
+      if (!isNaN(value) && value !== "") return Number(value);
+      return value;
+    }
+
+    function hitungOperator() {
+      const a = parseValue(document.getElementById("valueA").value.trim());
+      const b = parseValue(document.getElementById("valueB").value.trim());
+      const op = document.getElementById("operator").value;
+      const result = document.getElementById("result");
+      let value;
+      let pesan = "";
+
+      switch (op) {
+        case "==":
+          value = a == b;
+          pesan = `Perbandingan nilai saja. ${JSON.stringify(a)} == ${JSON.stringify(b)} → ${value}`;
+          break;
+        case "===":
+          value = a === b;
+          pesan = `Perbandingan tipe dan nilai. ${JSON.stringify(a)} === ${JSON.stringify(b)} → ${value}`;
+          break;
+        case "!=":
+          value = a != b;
+          pesan = `Tidak sama berdasarkan nilai. ${JSON.stringify(a)} != ${JSON.stringify(b)} → ${value}`;
+          break;
+        case "!==":
+          value = a !== b;
+          pesan = `Tidak sama tipe atau nilai. ${JSON.stringify(a)} !== ${JSON.stringify(b)} → ${value}`;
+          break;
+        case ">":
+          value = a > b;
+          pesan = `${JSON.stringify(a)} adalah lebih besar dari ${JSON.stringify(b)} → ${value}`;
+          break;
+        case ">=":
+          value = a >= b;
+          pesan = `${JSON.stringify(a)} adalah lebih besar atau sama dengan ${JSON.stringify(b)} → ${value}`;
+          break;
+        case "<":
+          value = a < b;
+          pesan = `${JSON.stringify(a)} adalah lebih kecil dari ${JSON.stringify(b)} → ${value}`;
+          break;
+        case "<=":
+          value = a <= b;
+          pesan = `${JSON.stringify(a)} adalah lebih kecil atau sama dengan ${JSON.stringify(b)} → ${value}`;
+          break;
+        case "&&":
+          value = Boolean(a) && Boolean(b);
+          pesan = `Kedua nilai harus benar. ${JSON.stringify(a)} && ${JSON.stringify(b)} → ${value}`;
+          break;
+        case "||":
+          value = Boolean(a) || Boolean(b);
+          pesan = `Salah satu nilai benar. ${JSON.stringify(a)} || ${JSON.stringify(b)} → ${value}`;
+          break;
+        default:
+          value = "Operator tidak dikenali";
+      }
+
+      result.innerHTML = `
+        <strong>Hasil:</strong> ${JSON.stringify(value)}<br>
+        <em>${pesan}</em>`;
+    }
+  </script>
+</body>
+</html>

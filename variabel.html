@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variabel - Profil Sekolah</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .back-button {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 180ms ease;
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .variabel-container {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .profile-title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .profile-title h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+    }
+    
+    .profile-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+    
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    
+    .profile-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(18px);
+      transition: transform 180ms ease;
+    }
+    
+    .profile-card:hover {
+      transform: translateY(-4px);
+    }
+    
+    .profile-label {
+      font-size: 11px;
+      color: #adb7d6;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    
+    .profile-value {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    
+    .profile-value a {
+      color: #ffb1e5;
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+    
+    .profile-value a:hover {
+      color: #ff88d6;
+      text-decoration: underline;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.86);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-box {
+      background: rgba(15, 10, 24, 0.97);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 32px;
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-box h3 {
+      margin: 0 0 16px;
+      font-size: 1.4rem;
+    }
+
+    .modal-box p {
+      margin: 0 0 24px;
+      color: #adb7d6;
+      font-size: 0.95rem;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    .modal-box input::placeholder {
+      color: #64748b;
+    }
+
+    .modal-box input:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn-primary, .btn-secondary {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 24px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 180ms ease;
+    }
+
+    .btn-primary {
+      background: #22d3ee;
+      color: #111;
+    }
+
+    .btn-primary:hover {
+      background: #06b6d4;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #475569;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="candy-fall" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Modal Input Nama -->
+  <div class="modal" id="modalNama">
+    <div class="modal-box">
+      <h3>Masukkan Nama Anda</h3>
+      <input type="text" id="namaInput" placeholder="Nama lengkap...">
+      <button class="btn-primary" onclick="lanjutNama()">Lanjut</button>
+    </div>
+  </div>
+
+  <!-- Modal Website -->
+  <div class="modal hidden" id="modalWebsite">
+    <div class="modal-box">
+      <h3>Buka Website Sekolah?</h3>
+      <p id="pesanWelcome"></p>
+      <div class="modal-buttons">
+        <button class="btn-primary" onclick="bukaSitus()">Ya</button>
+        <button class="btn-secondary" onclick="tidakBuka()">Tidak</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div>
+        <span class="logo">JS</span>
+        <div>
+          <h1>Menu JavaScript</h1>
+          <p>Pilih materi dan mulai belajar</p>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-button" aria-label="Toggle tema">🌙 / ☀️</button>
+    </header>
+
+    <main class="variabel-container">
+      <button class="back-button" onclick="history.back();">← Kembali</button>
+      
+      <div class="profile-title">
+        <h1>Profil SMK N 1 Purwokerto</h1>
+        <p>Informasi lengkap tentang sekolah kami</p>
+      </div>
+
+      <div class="profile-grid">
+        <div class="profile-card">
+          <div class="profile-label">Nama Sekolah</div>
+          <div class="profile-value">SMK NEGERI 1 PURWOKERTO</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Alamat</div>
+          <div class="profile-value">Jalan Dr. Soeparno No. 29, Purwokerto Wetan, Kecamatan Purwokerto Timur, Kabupaten Banyumas, Jawa Tengah.</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Jurusan</div>
+          <div class="profile-value">TJKT, PPLG, PM, AKL, TF, DKV, MPLB</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Jumlah Siswa</div>
+          <div class="profile-value">2128 Siswa</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Website</div>
+          <div class="profile-value"><a href="https://smkn1purwokerto.sch.id/" target="_blank">Kunjungi Website</a></div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Jumlah Guru</div>
+          <div class="profile-value">120 Orang</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Ekstrakurikuler</div>
+          <div class="profile-value">Badminton, Pramuka, Bahasa Inggris, Handball, Futsal, MPK, Basket, Paskibra, Jurnalistik, Voli, Rohis, Tari, PKS, Panahan, OSIS, PMR, Musik, Teater, dll.</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Fasilitas</div>
+          <div class="profile-value">Lapangan olahraga, Masjid, Lab keahlian, Lab IPAS, Ruang kelas, Kantin, Perpustakaan, Gazebo, Komputer tiap lab, dll.</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Tenaga TU</div>
+          <div class="profile-value">27 Orang</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Kepala Sekolah</div>
+          <div class="profile-value">Drs. Witoto</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Kapro</div>
+          <div class="profile-value">Ichsan Romdhona, S.Pd.</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-label">Wali Kelas</div>
+          <div class="profile-value">Dwi Prastanti Fajriatun, S.Pd</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Modal flow untuk halaman Variabel
+    let userName = '';
+
+    window.addEventListener('load', () => {
+      document.getElementById('modalNama').classList.remove('hidden');
+    });
+
+    function lanjutNama() {
+      const nama = document.getElementById('namaInput').value.trim();
+      if (!nama) {
+        alert('Silakan masukkan nama Anda');
+        return;
+      }
+      
+      userName = nama;
+      document.getElementById('modalNama').classList.add('hidden');
+      
+      // Tampilkan modal website
+      document.getElementById('pesanWelcome').innerText = `Halo ${nama}, apakah Anda ingin membuka website utama sekolah kami?`;
+      document.getElementById('modalWebsite').classList.remove('hidden');
+    }
+
+    function bukaSitus() {
+      window.open('https://s.id/smkn1purwokerto', '_blank');
+      document.getElementById('modalWebsite').classList.add('hidden');
+    }
+
+    function tidakBuka() {
+      document.getElementById('modalWebsite').classList.add('hidden');
+    }
+
+    // Handle Enter key pada input nama
+    document.addEventListener('DOMContentLoaded', () => {
+      const namaInput = document.getElementById('namaInput');
+      if (namaInput) {
+        namaInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            lanjutNama();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

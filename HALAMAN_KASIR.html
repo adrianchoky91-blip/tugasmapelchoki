@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasir Mini Market</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+        .box {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        h3 {
+            text-align: center;
+            margin: 0 0 16px;
+            font-size: 1.3rem;
+            color: #1f2937;
+        }
+        hr {
+            border: none;
+            border-top: 2px dashed #9ca3af;
+            margin: 14px 0;
+        }
+        input, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+        }
+        input {
+            background: #f9fafb;
+            color: #1f2937;
+        }
+        button {
+            background: #1f2937;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background: #111827;
+        }
+        .right {
+            text-align: right;
+            margin: 8px 0;
+            color: #374151;
+        }
+        .hidden {
+            display: none !important;
+        }
+        #hasil {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+            line-height: 1.8;
+            color: #1f2937;
+            font-size: 0.95rem;
+        }
+        .back-btn {
+            margin-top: 16px;
+            background: #8b5cf6;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            width: 100%;
+            text-align: center;
+        }
+        .back-btn:hover {
+            background: #7c3aed;
+        }
+        p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box" id="loginBox">
+        <h3>LOGIN KASIR</h3>
+        <hr>
+        <input type="text" id="user" placeholder="Username = kasir">
+        <input type="password" id="pass" placeholder="Password = kasir123">
+        <button onclick="login()">Masuk</button>
+    </div>
+
+    <!-- KASIR -->
+    <div class="box hidden" id="kasirBox">
+        <h3>MINI MARKET</h3>
+        <p class="right" id="kasir"></p>
+        <hr>
+
+        <input type="number" id="tb" placeholder="Total Belanja">
+        <button onclick="hitung()">Cetak Struk</button>
+
+        <hr>
+        <div id="hasil"></div>
+        <hr>
+        <p class="right">Terima kasih</p>
+        <button class="back-btn" onclick="kembali()">Kembali ke pilihan</button>
+    </div>
+</div>
+
+<script>
+// DATA REGISTRASI 
+let dataUser = "kasir";
+let dataPass = "kasir123";
+
+function login() {
+    let u = document.getElementById("user").value;
+    let p = document.getElementById("pass").value;
+
+    if (u === "" || p === "") {
+        alert("Data belum lengkap");
+        return;
+    }
+
+    if (u !== dataUser || p !== dataPass) {
+        alert("Login gagal. Logout.");
+        location.reload();
+        return;
+    }
+
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("kasirBox").classList.remove("hidden");
+    document.getElementById("kasir").innerText = "Kasir: " + u;
+}
+
+function hitung() {
+    let tb = Number(document.getElementById("tb").value);
+    if (tb <= 0) {
+        alert("Total belanja tidak valid");
+        return;
+    }
+
+    // DISKON OTOMATIS
+    let diskon = 0.20;
+    let step = 200000;
+    let tbMax = 1000000;
+
+    let turun = Math.floor((tbMax - tb) / step);
+    diskon -= turun * 0.05;
+    if (diskon < 0) diskon = 0;
+
+    let potongan = tb * diskon;
+    let bayar = tb - potongan;
+
+    document.getElementById("hasil").innerHTML = `
+        TOTAL        : Rp ${tb.toLocaleString()}<br>
+        DISKON       : ${(diskon * 100)}%<br>
+        POTONGAN     : Rp ${potongan.toLocaleString()}<br>
+        <b>BAYAR       : Rp ${bayar.toLocaleString()}</b>
+    `;
+}
+
+function kembali() {
+    window.location.href = 'TUGAS.html';
+}
+</script>
+
+</body>
+</html>

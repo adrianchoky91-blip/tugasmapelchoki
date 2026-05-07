@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Output JavaScript</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="candy-fall" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div>
+        <span class="logo">JS</span>
+        <div>
+          <h1>Output JavaScript</h1>
+          <p>Penjelasan cara menampilkan hasil di HTML dan browser</p>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-button" aria-label="Toggle tema">🌙 / ☀️</button>
+    </header>
+
+    <main>
+      <section class="card-grid">
+        <article class="card">
+          <div class="icon">💬</div>
+          <h2>console.log()</h2>
+          <p>Mengirim pesan ke konsol browser. Bukan tampilan langsung di halaman web.</p>
+          <pre>console.log("Halo dunia");</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">⚠️</div>
+          <h2>alert()</h2>
+          <p>Menampilkan kotak popup di browser. Pengguna harus menutupnya untuk melanjutkan.</p>
+          <pre>alert("Halo dunia");</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">🧾</div>
+          <h2>document.write()</h2>
+          <p>Menulis langsung ke halaman HTML saat dokumen sedang dimuat.</p>
+          <pre>document.write("Halo dunia");</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">✍️</div>
+          <h2>element.innerHTML</h2>
+          <p>Memasukkan atau mengubah konten HTML di dalam elemen yang sudah ada.</p>
+          <pre>document.getElementById("hasil").innerHTML = "Halo";</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">📝</div>
+          <h2>element.textContent</h2>
+          <p>Menuliskan teks saja ke dalam elemen, tanpa menafsirkan HTML.</p>
+          <pre>document.getElementById("hasil").textContent = "Halo";</pre>
+        </article>
+
+        <article class="card">
+          <div class="icon">🔗</div>
+          <h2>Gabungan Output</h2>
+          <p>Biasanya kita pakai <code>console.log</code> untuk debugging dan <code>innerHTML</code> / <code>textContent</code> untuk menampilkan hasil ke user.</p>
+        </article>
+      </section>
+
+      <div style="margin-top: 32px; text-align: center;">
+        <button onclick="window.location.href='Index.html'" class="theme-button">⬅ Kembali ke Menu</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

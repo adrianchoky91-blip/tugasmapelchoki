@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perulangan - Loop</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.box {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+h3 {
+    text-align: center;
+    margin: 0 0 16px;
+    color: #1f2937;
+}
+
+h4 {
+    color: #374151;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+hr {
+    border: none;
+    border-top: 2px dashed #9ca3af;
+    margin: 14px 0;
+}
+
+input, button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+input {
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.btn-proses {
+    background: #1f2937;
+    color: white;
+}
+
+.btn-proses:hover {
+    background: #111827;
+}
+
+.btn-back {
+    background: #6366f1;
+    color: white;
+}
+
+.btn-back:hover {
+    background: #4f46e5;
+}
+
+#hasil {
+    background: #f3f4f6;
+    padding: 12px;
+    border-radius: 8px;
+    line-height: 1.6;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #d1d5db;
+}
+
+.info {
+    background: #dbeafe;
+    border-left: 4px solid #3b82f6;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    color: #1e40af;
+    font-size: 14px;
+}
+
+.code-box {
+    background: #1f2937;
+    color: #00ff00;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 10px 0;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="box">
+        <h3>🔁 PERULANGAN (LOOP)</h3>
+        <hr>
+        
+        <div class="info">
+            📝 Masukkan angka awal, program akan menampilkan perulangan dari angka tersebut hingga 1000
+        </div>
+
+        <label for="angkaAwal"><b>Angka Awal:</b></label>
+        <input type="number" id="angkaAwal" placeholder="Contoh: 1, 995, 500" min="1" max="1000">
+        
+        <h4>Tipe Loop:</h4>
+        <select id="tipeLoop" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #d1d5db; margin-top: 10px; font-family: 'Courier New', monospace;">
+            <option value="for">🔄 FOR Loop (Jumlah iterasi pasti)</option>
+            <option value="while">⏳ WHILE Loop (Kondisi dinamis)</option>
+            <option value="do-while">➡️ DO-WHILE Loop (Minimal 1x berjalan)</option>
+        </select>
+
+        <button class="btn-proses" onclick="prosesPerulangan()">Jalankan Perulangan</button>
+        
+        <hr>
+
+        <h4>📊 Hasil Perulangan:</h4>
+        <div id="hasil">Hasil akan ditampilkan di sini...</div>
+
+        <hr>
+
+        <h4>💻 Kode JavaScript:</h4>
+        <div class="code-box" id="kodeDipilih"></div>
+
+        <hr>
+
+        <button class="btn-back" onclick="keIndex()">⬅ Kembali ke Index</button>
+    </div>
+</div>
+
+<script>
+function prosesPerulangan() {
+    let angka = Number(document.getElementById("angkaAwal").value);
+    let tipe = document.getElementById("tipeLoop").value;
+    let hasil = document.getElementById("hasil");
+    let kodeDipilih = document.getElementById("kodeDipilih");
+
+    // Validasi input
+    if (!angka || angka < 1 || angka > 1000) {
+        alert("Masukkan angka antara 1 hingga 1000!");
+        return;
+    }
+
+    let output = [];
+    let kodeJavaScript = "";
+    let penjelasan = "";
+
+    // FOR LOOP - Hitung semua angka dari awal ke 1000
+    if (tipe === "for") {
+        penjelasan = "✅ FOR Loop: Jumlah iterasi PASTI diketahui. Cocok saat tahu berapa kali loop harus berjalan.";
+        kodeJavaScript = `for (let i = ${angka}; i <= 1000; i++) {
+    console.log(i);
+}`;
+        for (let i = angka; i <= 1000; i++) {
+            output.push(i);
+        }
+    }
+
+    // WHILE LOOP - Hitung dengan step besar (hanya kelipatan 50)
+    else if (tipe === "while") {
+        penjelasan = "⏳ WHILE Loop: Kondisi dicek DI AWAL. Bisa jadi 0x iterasi jika kondisi awal FALSE.";
+        kodeJavaScript = `let i = ${angka};
+while (i <= 1000) {
+    console.log(i);
+    i += 50;  // Naik 50 setiap iterasi
+}`;
+        let i = angka;
+        while (i <= 1000) {
+            output.push(i);
+            i += 50;
+        }
+    }
+
+    // DO-WHILE LOOP - Selalu minimal 1x, meski kondisi salah
+    else if (tipe === "do-while") {
+        penjelasan = "➡️ DO-WHILE Loop: Kondisi dicek DI AKHIR. SELALU minimal berjalan 1x!";
+        kodeJavaScript = `let i = ${angka};
+do {
+    console.log(i);
+    i += 100;  // Naik 100 setiap iterasi
+} while (i <= 1000);`;
+        let i = angka;
+        do {
+            output.push(i);
+            i += 100;
+        } while (i <= 1000);
+    }
+
+    // Tampilkan hasil
+    let hasilHTML = output.join(" , ");
+    let jumlahIterasi = output.length;
+
+    hasil.innerHTML = `
+        <div class="info">${penjelasan}</div>
+        <b>Dari angka ${angka} hingga 1000:</b><br><br>
+        <span style="color: #059669; font-weight: bold;">${hasilHTML}</span><br><br>
+        <hr>
+        <b>✅ Total iterasi: ${jumlahIterasi} kali</b>
+    `;
+
+    // Tampilkan kode
+    kodeDipilih.innerText = kodeJavaScript;
+}
+
+// Jalankan perulangan saat input di-enter
+document.getElementById("angkaAwal").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        prosesPerulangan();
+    }
+});
+
+function keIndex(){
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
