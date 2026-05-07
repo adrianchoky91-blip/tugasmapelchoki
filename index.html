@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu JavaScript</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="candy-fall" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div>
+        <span class="logo">JS</span>
+        <div>
+          <h1>Menu JavaScript</h1>
+          <p>Pilih materi dan mulai belajar</p>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-button" aria-label="Toggle tema">🌙 / ☀️</button>
+    </header>
+
+    <main>
+      <section class="card-grid">
+        <article class="card" onclick="window.location.href='output.html';">
+          <div class="icon">💻</div>
+          <h2>Output</h2>
+          <p>Menampilkan data</p>
+        </article>
+        <article class="card" onclick="window.location.href='variabel.html';">
+          <div class="icon">📦</div>
+          <h2>Variabel</h2>
+          <p>Menyimpan data</p>
+        </article>
+        <article class="card" onclick="window.location.href='input.html';">
+          <div class="icon">📝</div>
+          <h2>Input</h2>
+          <p>Input dari user</p>
+        </article>
+        <article class="card" onclick="window.location.href='operator.html';">
+          <div class="icon">➗</div>
+          <h2>Operator</h2>
+          <p>Perbandingan & logika</p>
+        </article>
+        <article class="card" onclick="window.location.href='HALAMAN_KASIR.html';">
+          <div class="icon">🔀</div>
+          <h2>Percabangan</h2>
+          <p>Pengambilan keputusan</p>
+        </article>
+        <article class="card" onclick="window.location.href='perulangan.html';">
+          <div class="icon">🔁</div>
+          <h2>Perulangan</h2>
+          <p>Looping data</p>
+        </article>
+        <article class="card" onclick="window.location.href='array.html';">
+          <div class="icon">🧩</div>
+          <h2>Array</h2>
+          <p>Data banyak</p>
+        </article>
+        <article class="card" onclick="window.location.href='fungsi.html';">
+          <div class="icon">⚙️</div>
+          <h2>Fungsi</h2>
+          <p>Blok program</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
